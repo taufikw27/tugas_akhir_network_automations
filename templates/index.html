@@ -1,0 +1,141 @@
+{% include 'header.html' %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Virtual Machines</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Virtual Machines</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <div class="col-md-8">
+            <!-- /.card -->
+            <div class="row">
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                      <th>VMID</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Memory Usage</th>
+                      <th>CPU Usage</th>
+                      <th>Disk Usage</th>
+                      <th>Setting</th>
+                    </tr>
+                    </thead>
+                    <!--  -->
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+{% include 'footer.html' %}
+<script>
+  var interval = {};
+  // var intervalIn = {};
+  $(document).ready(function() {
+    $.ajax({
+      type: 'post',
+      url:'/statusvm',
+      dataType:'json',
+      success: function(result){
+        result.forEach(element => {
+          $(`#${element.vm_id}`).text("ON");
+          interval[element.vm_id] = setInterval(function(){
+            $.ajax({
+              type: 'POST',
+              url:`/memoryauto`,
+              data: {
+                id:element.vm_id,
+              },
+              success: function(result){
+                console.log(result);
+              }
+            })    
+          },3000)
+        });
+      }
+    })
+
+  })
+  function myFunction(id) {  
+    let text =  $(`#${id}`).text()
+    if(text === "ON") {
+      $.ajax({
+        type: 'POST',
+        url:'/remove',
+        data: {
+          id: id,
+        },
+        success:function(result){
+          // console.log(result);
+          // // document.getElementById("demo").style.color = "red";
+          $(`#${id}`).text("Auto");
+            clearInterval(interval[id]);
+
+        }
+      })
+    }else if (text === "Auto") {
+      $.ajax({
+        type: 'POST',
+        url:'/add',
+        data: {
+          id: id,
+          status: 1
+        },
+        success:function(result){
+          $(`#${id}`).text("ON");
+          interval[id] = setInterval(function(){
+            $.ajax({
+              type: 'POST',
+              url:`/memoryauto`,
+              data: {
+                id:id,
+              },
+              success: function(result){
+                console.log(result);
+              }
+            })    
+          },3000)
+        }
+      })
+    }
+  } 
+
+</script>

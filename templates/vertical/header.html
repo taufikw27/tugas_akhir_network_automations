@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>Annex - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta content="Admin Dashboard" name="description" />
+        <meta content="Mannatthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+        <link href="{{ url_for('static', filename='assets/plugins/morris/morris.css') }}" rel="stylesheet">
+        <link rel="shortcut icon" href="{{ url_for('static',filename='assets/images/favicon.ico') }}">
+        <link href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url_for('static',filename='assets/css/icons.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet" type="text/css">
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left side-menu">
+                <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
+                    <i class="ion-close"></i>
+                </button>
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center" style="background-color: #007bff;" >
+                        <a style="color: white;" class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="false" aria-expanded="false">
+                         <img src="{{ url_for('static',filename='assets/images/users/avatar-1.jpg') }}" alt="user" class="rounded-circle">
+                         {{ username }}
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                         <!-- item-->
+                         <a class="dropdown-item" href=""><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
+                     </div>
+                        <!-- <a href="index.html" class="logo"><img src="assets/images/logo.png" height="24" alt="logo"></a> -->
+                    </div>
+                </div>
+
+                <div class="sidebar-inner slimscrollleft">
+
+                    <div id="sidebar-menu">
+                        <ul>
+                            <li class="menu-title">Main</li>
+
+                            <li>
+                                <a href="/dashboard" class="waves-effect">
+                                    <i class="mdi mdi-airplay"></i>
+                                    <span> Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/form-install" class="waves-effect">
+                                    <i class="mdi mdi-airplay"></i>
+                                    <span> Form Install</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div> <!-- end sidebarinner -->
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- Start right Content here -->
